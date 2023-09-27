@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            margin-left: 20px;
+        }
+
+        .fxn {
+            margin: 10px;
+        }
+
+        p {
+            font-size: 100px;
+        }
+
+        .form-label {
+            font-size: 30px;
+        }
+
+        .user {
+            margin-left: 150px;
+        }
+
+        .ip1 {
+            margin-left: 75px;
+        }
+
+        .ip2 {
+            margin-left: 108px;
+        }
+
+        .btn {
+            margin-left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <p class="user">
+            Admin Page
+        </p>
+        <br>
+        <br>
+        <div class="content">
+            <form action="/admin1" method="POST">
+                <div class="fxn">
+                    <label for="des_name" class="form-label user">Delete a design</label>
+                    <input type="text" name="des_name" class="ip1" size="30">
+                    <button class="btn btn-primary" type="submit">Delete design</button>
+                </div>
+            </form>
+
+            <form action="/admin2" method="POST">
+                <div class="fxn">
+                    <label for="username" class="form-label user">Delete a user</label>
+                    <input type="text" name="username" class="ip2" size="30">
+                    <button class="btn btn-primary" type="submit">Delete user</button>
+                </div>
+            </form>
+            <a href="/admin_orders" class="btn btn-dark" style="margin-left: 10% ;" role="button"
+                aria-pressed="true">Placed Orders</a>
+        </div>
+    </header>
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Static Tee Designer</title>
+    <style>
+        .drawing-area {
+            position: absolute;
+            top: 60px;
+            left: 122px;
+            z-index: 10;
+            width: 200px;
+            height: 400px;
+        }
+
+        .canvas-container {
+            width: 200px;
+            height: 400px;
+            position: relative;
+            user-select: none;
+        }
+
+        #tshirt-div {
+            width: 452px;
+            height: 548px;
+            position: relative;
+            background-color: #fff;
+        }
+
+        #canvas {
+            position: absolute;
+            width: 200px;
+            height: 400px;
+            left: 0px;
+            top: 0px;
+            user-select: none;
+            cursor: default;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+</head>
+
+<body style="background-color: #FCF19F;">
+    <!-- Create the container of the tool -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Your Cart</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/delete">Delete A Design</a>
+                    </li> -->
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="tshirt-div" style="margin-left: 40% ; margin-top: 10%;">
+        <!-- 
+                Initially, the image will have the background tshirt that has transparency
+                So we can simply update the color with CSS or JavaScript dinamically
+            -->
+        <img id="tshirt-backgroundpicture" src="/images/background_tshirt.png" />
+
+        <div id="drawingArea" class="drawing-area">
+            <div class="canvas-container">
+                <canvas id="tshirt-canvas" width="200" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- The select that will allow the user to pick one of the static designs -->
+    <br>
+    <form action="/add_to_cart" method="POST" style="margin-left: 45%;">
+        <label for="tshirt_design" style="font-size: 20px;">T-Shirt Design:</label>
+        <select name="tshirt_design" id="tshirt_design">
+            <option value="">Select The Design</option>
+            <option value="<%= file_name  %> ">Design</option>
+        </select>
+
+        <!-- The Select that allows the user to change the color of the T-Shirt -->
+        <br><br>
+        <label for="tshirt_color" style="font-size: 20px;">T-Shirt Color:</label>
+        <select name="tshirt_color" id="tshirt_color">
+            <!-- You can add any color with a new option and definings its hex code -->
+            <option value="#fff">White</option>
+            <option value="#000">Black</option>
+            <option value="#f00">Red</option>
+            <option value="#008000">Green</option>
+            <option value="#ff0">Yellow</option>
+        </select>
+
+        <label for="tshirt_size" style="font-size: 20px;">T-Shirt Size:</label>
+        <select name="tshirt_size" id="tshirt_size">
+
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="XXL">XXL</option>
+        </select>
+
+        <br>
+        <input type="hidden" id="des_id" name="des_id" value=<%=id %>>
+        <button type="submit" class="btn btn-outline-dark">Add To Cart</button>
+    </form>
+
+
+    <!-- Include Fabric.js in the page -->
+    <script src="/js/fabric.js"></script>
+
+    <script>
+        let canvas = new fabric.Canvas('tshirt-canvas');
+
+        function updateTshirtImage(imageURL) {
+            // If the user doesn't pick an option of the select, clear the canvas
+            if (!imageURL) {
+                canvas.clear();
+            }
+
+            // Create a new image that can be used in Fabric with the URL
+            fabric.Image.fromURL(imageURL, function (img) {
+                // Define the image as background image of the Canvas
+                canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+                    // Scale the image to the canvas size
+                    scaleX: canvas.width / img.width,
+                    scaleY: canvas.height / img.height
+                });
+            });
+        }
+
+        // Update the TShirt color according to the selected color by the user
+        document.getElementById("tshirt_color").addEventListener("change", function () {
+            document.getElementById("tshirt-div").style.backgroundColor = this.value;
+        }, false);
+
+        // Update the TShirt color according to the selected color by the user
+        document.getElementById("tshirt_design").addEventListener("change", function () {
+
+            // Call the updateTshirtImage method providing as first argument the URL
+            // of the image provided by the select
+            updateTshirtImage(this.value);
+        }, false);
+    </script>
+</body>
+
+</html>
